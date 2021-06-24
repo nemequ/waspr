@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Instruction } from '../instruction';
+import { InstructionDb } from '../instruction-db';
 import { InstructionService } from '../instruction.service';
 import { LoweringImplementation } from '../lowering-implementation';
+
 
 @Component({
   selector: 'app-instructions',
@@ -9,7 +11,15 @@ import { LoweringImplementation } from '../lowering-implementation';
   styleUrls: ['./instructions.component.css']
 })
 export class InstructionsComponent implements OnInit {
-  instructions: Instruction[] = []
+  instructionList: string[] = [];
+  instructionDetailsVisible: Map<string, boolean> = new Map();
+
+  instructions: InstructionDb = new InstructionDb([]);
+
+  toggleInstructionDetailsVisible(instruction_name: string): void {
+    this.instructionDetailsVisible.set(instruction_name, !this.instructionDetailsVisible.get(instruction_name));
+    console.log(this.instructionDetailsVisible.get(instruction_name));
+  }
 
   idOf(inst: Instruction): string {
     return 'inst-' + inst.name.replace('.', '_');
@@ -30,8 +40,11 @@ export class InstructionsComponent implements OnInit {
   getInstructions(): void {
     this.instructionService.getInstructions()
       .then((instrs) => {
-        console.log(instrs);
-        this.instructions = instrs;
+        this.instructions = new InstructionDb(instrs);
+        this.instructionList = this.instructions.getInstructionList();
+        this.instructionList.forEach((name) => {
+          this.instructionDetailsVisible.set(name, false);
+        });
       });
   }
 
