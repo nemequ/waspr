@@ -1,0 +1,38 @@
+name: deploy
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'
+    - name: Setup Angular CLI
+      run: npm install -g @angular/cli
+    - name: NPM install
+      run: npm install
+    - name: Build
+      run: ng build --base-href '/waspr/'
+    - name: Initialize new repo
+      run: |
+        cd dist/waspr
+        git init
+        git add -A
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m 'Deploy'
+    - name: GitHub Push
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        force: true
+        directory: dist/waspr
