@@ -1,0 +1,27 @@
+ol.comma-separated {
+  display: inline;
+  list-style-type: none;
+  padding: 0;
+}
+
+ol.comma-separated > li {
+  display: inline;
+}
+
+ol.comma-separated > li:after {
+  content: ", ";
+}
+
+ol.comma-separated > li:last-child:after {
+  content: "";
+}
+
+.function-prototype {
+  display: flex;
+  flex-direction: row;
+}
+
+.function-prototype > * {
+  flex-direction: row;
+  padding: 0 0.5em;
+}
