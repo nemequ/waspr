@@ -4,7 +4,8 @@
   <p>
     These are the WebAssembly SIMD instructions; if you're working in a
     higher-level language like C or C++ you'll likely want to look at
-    the <a routerLink="/intrinsics">intrinsics</a> instead.
+    the <a routerLink="/intrinsics">intrinsics</a> or
+    <a routerLink="/wav">WAV functions</a> instead.
   </p>
 </div>
 
@@ -39,7 +40,9 @@
             <markdown [data]="instruction.description"></markdown>
 
             <p *ngIf="instruction.simde">
-              View <a href="{{ instruction.simde }}">implementation <i class="fas fa-external-link-alt"></i></a> in SIMDe.
+              View <a href="{{ instruction.simde }}">implementation
+              <i class="fas fa-external-link-alt"></i></a> of
+              corresponding intrinsic in SIMDe.
             </p>
 
             <h3>APIs</h3>

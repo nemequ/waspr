@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { IntrinsicsComponent } from './intrinsics/intrinsics.component';
+import { WavComponent } from './wav/wav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InstructionsComponent,
-    IntrinsicsComponent
+    IntrinsicsComponent,
+    WavComponent
   ],
   imports: [
     BrowserModule,
