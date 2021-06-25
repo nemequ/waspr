@@ -18,29 +18,12 @@ export class InstructionsComponent implements OnInit {
 
   toggleInstructionDetailsVisible(instruction_name: string): void {
     this.instructionDetailsVisible.set(instruction_name, !this.instructionDetailsVisible.get(instruction_name));
-    console.log(this.instructionDetailsVisible.get(instruction_name));
-  }
-
-  idOf(inst: Instruction): string {
-    return 'inst-' + inst.name.replace('.', '_');
-  }
-
-  sumLatency(impl: LoweringImplementation): number {
-    var total: number = 0;
-    impl.instructions.forEach((inst) => total += inst.latency)
-    return total;
-  }
-
-  sumOps(impl: LoweringImplementation): number {
-    var total: number = 0;
-    impl.instructions.forEach((inst) => total += inst.uops)
-    return total;
   }
 
   getInstructions(): void {
     this.instructionService.getInstructions()
       .then((instrs) => {
-        this.instructions = new InstructionDb(instrs);
+        this.instructions = instrs;
         this.instructionList = this.instructions.getInstructionList();
         this.instructionList.forEach((name) => {
           this.instructionDetailsVisible.set(name, false);

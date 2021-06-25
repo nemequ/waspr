@@ -2,14 +2,20 @@ import { Injectable } from '@angular/core';
 import { Instruction } from './instruction';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { InstructionDb } from './instruction-db';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstructionService {
   private dataUri = 'https://nemequ.github.io/wasm-simd-data/wasm-simd-data.json';
+  private instdb: InstructionDb | undefined = undefined;
 
-  getInstructions(): Promise<Instruction[]> {
+  getInstructions(): Promise<InstructionDb> {
+    if (this.instdb) {
+      return of(this.instdb).toPromise();
+    }
+
     return this.http.get(this.dataUri).toPromise().then((data) => {
       var instructions: Instruction[] = [];
 
@@ -22,8 +28,9 @@ export class InstructionService {
         });
       }
 
-      // return instructions.slice(0, 16);
-      return instructions;
+      this.instdb = new InstructionDb(instructions);
+
+      return this.instdb;
     });
   }
 

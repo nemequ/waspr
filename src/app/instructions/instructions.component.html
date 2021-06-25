@@ -1,9 +1,19 @@
 <div class="container">
+  <h2>Instructions</h2>
+
+  <p>
+    These are the WebAssembly SIMD instructions; if you're working in a
+    higher-level language like C or C++ you'll likely want to look at
+    the <a routerLink="/intrinsics">intrinsics</a> instead.
+  </p>
+</div>
+
+<div class="container">
   <div class="accordion accordian-flush">
     <div *ngFor="let instruction_name of instructionList" class="accordion-item">
       <div *ngFor="let instruction of [instructions.getInstruction(instruction_name)!]">
-        <h2 class="accordion-header" id="{{ idOf(instruction) }}">
-          <button class="accordion-button collapsed" [ngClass]="{ 'collapsed': !instructionDetailsVisible.get(instruction_name) }" (click)="toggleInstructionDetailsVisible(instruction_name)" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + idOf(instruction)" [attr.aria-controls]="'#collapse-' + idOf(instruction)">
+        <h2 class="accordion-header" id="{{ instructions.instructionId(instruction) }}">
+          <button class="accordion-button" [ngClass]="{ 'collapsed': !instructionDetailsVisible.get(instruction_name) }" (click)="toggleInstructionDetailsVisible(instruction_name)" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + instructions.instructionId(instruction)" [attr.aria-controls]="'#collapse-' + instructions.instructionId(instruction)">
             <div class="item-header">
               <code>
                 <em class="item-name fw-bold">
@@ -22,7 +32,7 @@
           </button>
         </h2>
 
-        <div class="accordion-collapse" *ngIf="instructionDetailsVisible.get(instruction_name)" [attr.aria-labelledby]="idOf(instruction)">
+        <div class="accordion-collapse" *ngIf="instructionDetailsVisible.get(instruction_name)" [attr.aria-labelledby]="instructions.instructionId(instruction)">
           <div class="accordion-body">
             <h3>Description</h3>
 
@@ -130,8 +140,8 @@
                     <tfoot>
                       <tr>
                         <th colspan="2">Total</th>
-                        <td>{{ sumOps(impl) }}</td>
-                        <td>{{ sumLatency(impl) }}</td>
+                        <td>{{ instructions.sumOps(impl) }}</td>
+                        <td>{{ instructions.sumLatency(impl) }}</td>
                       </tr>
                     </tfoot>
                   </table>

@@ -1,0 +1,182 @@
+<div class="container">
+  <h2>WebAssembly SIMD Intrinsics</h2>
+
+  <p>
+    These functions refer to the C-level API provided by the compiler
+    in <a href="https://github.com/llvm/llvm-project/blob/main/clang/lib/Headers/wasm_simd128.h">
+    &lt;wasm_simd128.h&gt;</a>.
+  </p>
+
+  <p>
+    The API is designed to closely match the underlying WebAssembly
+    instructions, with almost all functions corresponding 1:1 with a
+    specific instruction.
+  </p>
+
+  <p>
+    A single type, <code>v128_t</code>, is used to represent all
+    vectors.  All functions will either accept a <code>v128_t</code> as
+    a parameter, return a <code>v128_t</code>, or both.
+  </p>
+</div>
+
+<div class="container">
+  <div class="accordion accordian-flush">
+    <div *ngFor="let intrinsic_name of intrinsicList" class="accordion-item">
+      <div *ngFor="let instruction of [instructions.getInstructionForIntrinsic(intrinsic_name)!]">
+        <div *ngFor="let intrinsic of [instructions.getIntrinsic(intrinsic_name)!]">
+          <h2 class="accordion-header" id="instructions.intrinsicId(intrinsic)">
+            <button
+                class="accordion-button"
+                [ngClass]="{ 'collapsed': !intrinsicDetailsVisible.get(intrinsic_name) }"
+                (click)="toggleIntrinsicDetailsVisible(intrinsic_name)"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse-' + instructions.intrinsicId(intrinsic)"
+                [attr.aria-controls]="'#collapse-' + instructions.intrinsicId(intrinsic)">
+              <div class="item-header">
+                <code>
+                  <em class="item-name fw-bold">
+                    {{ intrinsic.return }}
+                    {{ intrinsic.name }}
+                    (<ol class="function-parameters comma-separated">
+                      <li *ngFor="let param of intrinsic.params">
+                        {{ param.type }} {{ param.name }}
+                      </li>
+                    </ol>);
+                  </em>
+                </code>
+                <span class="item-title">{{ instruction.title }}</span>
+              </div>
+            </button>
+          </h2>
+
+          <div class="accordion-collapse" *ngIf="intrinsicDetailsVisible.get(intrinsic_name)" [attr.aria-labelledby]="instructions.intrinsicId(intrinsic)">
+            <div class="accordion-body">
+              <h3>Description</h3>
+
+              <markdown [data]="instruction.description"></markdown>
+
+              <p *ngIf="instruction.simde">
+                View <a href="{{ instruction.simde }}">implementation <i class="fas fa-external-link-alt"></i></a> in SIMDe.
+              </p>
+
+              <section>
+                <h4>Instruction</h4>
+
+                <p>
+                  <code>
+                    <em class="item-name fw-bold">
+                      {{ instruction.name }}
+                      (<ol class="function-parameters comma-separated">
+                        <li *ngFor="let param of instruction.params">
+                          {{ param.name }}: {{ param.type }}
+                        </li>
+                      </ol>)
+                      ->
+                      {{ instruction.return }}
+                    </em>
+                  </code>
+                </p>
+              </section>
+
+              <section>
+                <h4>WAV Functions</h4>
+
+                <p *ngIf="instruction.wav!.length > 1">
+                  These functions implement the same instruction in WAV
+                  as this intrinsic, but unlike intrinsics there are
+                  often multiple functions in WAV which correspond to a
+                  single instruction.
+                </p>
+
+                <p>
+                  This doesn't include the overloaded aliases yet (i.e.,
+                  <code>wav_{{ instruction.family_name }}()</code>).
+                </p>
+
+                <ul>
+                  <li *ngFor="let fn of instruction.wav">
+                    <code class="function-prototype">
+                      <span class="function-return-type">{{ fn.return }}</span>&nbsp;
+                      <em class="function-name fw-bold">{{ fn.name }}</em>
+                      (<ol class="function-parameters comma-separated">
+                        <li *ngFor="let param of fn.params" class="function-parameter">
+                          <span class="function-parameter-type">{{ param.type }}</span>&nbsp;<span class="function-parameter-name">{{ param.name }}</span>
+                        </li>
+                      </ol>);
+                    </code>
+                  </li>
+                </ul>
+              </section>
+
+              <h3>Lowering</h3>
+
+              <div class="alert alert-warning" role="alert">
+                <h5><i class="fas fa-exclamation-triangle"></i> Possibly inaccurate!</h5>
+                <hr />
+                <div>
+                  The lowering information included may not be accurate yet; we're still
+                  working on adding optimized versions, and until we do we are generating
+                  this information from sub-optimal implementations.  The real numbers are
+                  unlikely to be <em>higher</em>, but may very well be lower.  If you're interested
+                  in helping, see <a href="https://github.com/simd-everywhere/simde/issues/776">
+                  <i class="fab fa-github"></i> simde-everywhere/simde#776</a>.
+                </div>
+              </div>
+
+              <section *ngFor="let arch of instruction.lowering">
+                <h4>{{ arch.arch }}</h4>
+
+                <section *ngFor="let option of arch.options">
+                  <h5>{{ option.option }}</h5>
+
+                  <div *ngFor="let impl of option.implementations">
+                    <h6 *ngIf="impl.immediates && (option.implementations.length > 1)">
+                      Immediate value<span *ngIf="impl.immediates.length > 1">s</span>:
+                      <ol class="comma-separated">
+                        <li *ngFor="let imm of impl.immediates">{{ imm }}</li>
+                      </ol>
+                    </h6>
+
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>Instruction</th>
+                          <th>Parameters</th>
+                          <th>uOps</th>
+                          <th>Latency</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr *ngFor="let inst of impl.instructions">
+                          <td>{{ inst.name }}</td>
+                          <td>
+                            <ol class="comma-separated">
+                              <li class="d-inline" *ngFor="let arg of inst.arguments">{{ arg }}</li>
+                            </ol>
+                          </td>
+                          <td>{{ inst.uops }}</td>
+                          <td>{{ inst.latency }}</td>
+                        </tr>
+                      </tbody>
+
+                      <tfoot>
+                        <tr>
+                          <th colspan="2">Total</th>
+                          <td>{{ instructions.sumOps(impl) }}</td>
+                          <td>{{ instructions.sumLatency(impl) }}</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
