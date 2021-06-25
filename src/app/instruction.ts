@@ -12,4 +12,5 @@ export interface Instruction {
   wav?: Function[];
   intrin?: Function[];
   lowering: LoweringArch[];
+  simde?: string;
 }
