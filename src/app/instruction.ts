@@ -8,6 +8,7 @@ export interface Instruction {
   opcode: number;
   "return"?: string;
   params: Parameter[];
+  title?: string;
   description?: string;
   wav?: Function[];
   intrin?: Function[];

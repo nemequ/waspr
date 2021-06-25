@@ -4,18 +4,21 @@
       <div *ngFor="let instruction of [instructions.getInstruction(instruction_name)!]">
         <h2 class="accordion-header" id="{{ idOf(instruction) }}">
           <button class="accordion-button collapsed" [ngClass]="{ 'collapsed': !instructionDetailsVisible.get(instruction_name) }" (click)="toggleInstructionDetailsVisible(instruction_name)" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + idOf(instruction)" [attr.aria-controls]="'#collapse-' + idOf(instruction)">
-            <code>
-              <em class="item-name fw-bold">
-                {{ instruction.name }}
-                (<ol class="function-parameters comma-separated">
-                  <li *ngFor="let param of instruction.params">
-                    {{ param.name }}: {{ param.type }}
-                  </li>
-                </ol>)
-                ->
-                {{ instruction.return }}
-              </em>
-            </code>
+            <div class="item-header">
+              <code>
+                <em class="item-name fw-bold">
+                  {{ instruction.name }}
+                  (<ol class="function-parameters comma-separated">
+                    <li *ngFor="let param of instruction.params">
+                      {{ param.name }}: {{ param.type }}
+                    </li>
+                  </ol>)
+                  ->
+                  {{ instruction.return }}
+                </em>
+              </code>
+              <span class="item-title">{{ instruction.title }}</span>
+            </div>
           </button>
         </h2>
 
@@ -32,7 +35,7 @@
             <h3>APIs</h3>
 
             <section>
-              <h4>WAV Functions</h4>
+              <h4><a href="https://github.com/nemequ/wav">WAV</a> Functions</h4>
 
               <p>
                 This doesn't include the overloaded aliases yet (i.e.,

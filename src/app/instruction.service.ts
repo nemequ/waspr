@@ -16,6 +16,7 @@ export class InstructionService {
       for (const [family_name, family] of Object.entries(data)) {
         family['instructions'].forEach((instruction: Instruction) => {
           instruction.description = family["description"];
+          instruction.title = family["title"];
           instruction.family_name = family_name;
           instructions.push(instruction);
         });
