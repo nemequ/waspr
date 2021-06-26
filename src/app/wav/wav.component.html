@@ -135,14 +135,23 @@
                 <div class="alert alert-warning" role="alert">
                   <h5><i class="fas fa-exclamation-triangle"></i> Possibly inaccurate!</h5>
                   <hr />
-                  <div>
-                    The lowering information included may not be accurate yet; we're still
-                    working on adding optimized versions, and until we do we are generating
-                    this information from sub-optimal implementations.  The real numbers are
-                    unlikely to be <em>higher</em>, but may very well be lower.  If you're interested
-                    in helping, see <a href="https://github.com/simd-everywhere/simde/issues/776">
+                  <p>
+                    The lowering information here may not be accurate yet since we're still
+                    relying on autovectorization from the compiler for many implementations.
+                    We're working on adding optimized versions, but until we do there is a
+                    good chance these numbers are (significantly) higher than what you can
+                    expect from an optimized implementation like you'll find in Chrome or
+                    Firefox.
+                  </p>
+
+                  <p>
+                    If you're interested in helping, see
+                    <a href="https://github.com/simd-everywhere/simde/issues/776">
                     <i class="fab fa-github"></i> simde-everywhere/simde#776</a>.
-                  </div>
+                    Any changes made to <a [href]="instruction.simde">the implementation
+                    in SIMDe <i class="fas fa-external-link-alt"></i></a> will quickly find
+                    their way onto this site .
+                  </p>
                 </div>
 
                 <section *ngFor="let arch of instruction.lowering">
