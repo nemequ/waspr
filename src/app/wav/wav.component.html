@@ -23,7 +23,7 @@
     <div *ngFor="let wav_name of wavList" class="accordion-item">
       <div *ngFor="let instruction of [instructions.getInstructionForWav(wav_name)!]">
         <div *ngFor="let wav of [instructions.getWav(wav_name)!]">
-          <h2 class="accordion-header" id="instructions.wavId(wav)">
+          <h2 class="accordion-header" [id]="instructions.wavId(wav)">
             <button
                 class="accordion-button"
                 [ngClass]="{ 'collapsed': !wavDetailsVisible.get(wav_name) }"
@@ -56,7 +56,7 @@
               <markdown [data]="instruction.description"></markdown>
 
               <p *ngIf="instruction.simde">
-                View <a href="{{ instruction.simde }}">implementation
+                View <a [href]="instruction.simde">implementation
                 <i class="fas fa-external-link-alt"></i></a> of
                 corresponding intrinsic in SIMDe.
               </p>

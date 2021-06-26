@@ -25,7 +25,7 @@
     <div *ngFor="let intrinsic_name of intrinsicList" class="accordion-item">
       <div *ngFor="let instruction of [instructions.getInstructionForIntrinsic(intrinsic_name)!]">
         <div *ngFor="let intrinsic of [instructions.getIntrinsic(intrinsic_name)!]">
-          <h2 class="accordion-header" id="instructions.intrinsicId(intrinsic)">
+          <h2 class="accordion-header" [id]="instructions.intrinsicId(intrinsic)">
             <button
                 class="accordion-button"
                 [ngClass]="{ 'collapsed': !intrinsicDetailsVisible.get(intrinsic_name) }"
@@ -58,7 +58,7 @@
               <markdown [data]="instruction.description"></markdown>
 
               <p *ngIf="instruction.simde">
-                View <a href="{{ instruction.simde }}">implementation <i class="fas fa-external-link-alt"></i></a> in SIMDe.
+                View <a [href]="instruction.simde">implementation <i class="fas fa-external-link-alt"></i></a> in SIMDe.
               </p>
 
               <section>

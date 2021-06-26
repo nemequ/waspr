@@ -13,7 +13,7 @@
   <div class="accordion accordian-flush">
     <div *ngFor="let instruction_name of instructionList" class="accordion-item">
       <div *ngFor="let instruction of [instructions.getInstruction(instruction_name)!]">
-        <h2 class="accordion-header" id="{{ instructions.instructionId(instruction) }}">
+        <h2 class="accordion-header" [id]="instructions.instructionId(instruction)">
           <button class="accordion-button" [ngClass]="{ 'collapsed': !instructionDetailsVisible.get(instruction_name) }" (click)="toggleInstructionDetailsVisible(instruction_name)" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + instructions.instructionId(instruction)" [attr.aria-controls]="'#collapse-' + instructions.instructionId(instruction)">
             <div class="item-header">
               <code>
@@ -40,7 +40,7 @@
             <markdown [data]="instruction.description"></markdown>
 
             <p *ngIf="instruction.simde">
-              View <a href="{{ instruction.simde }}">implementation
+              View <a [href]="instruction.simde">implementation
               <i class="fas fa-external-link-alt"></i></a> of
               corresponding intrinsic in SIMDe.
             </p>
