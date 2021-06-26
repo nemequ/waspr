@@ -21,6 +21,11 @@ jobs:
       run: npm install
     - name: Build
       run: ng build --base-href '/waspr/'
+    - name: Handle routing
+      run: |
+        for dir in $(grep -oP "(?<=path: ')([^']+)" src/app/app-routing.module.ts); do
+          (cd dist/waspr && ln -s . "$dir");
+        done
     - name: Initialize new repo
       run: |
         cd dist/waspr
