@@ -8,13 +8,15 @@ import { MarkdownModule } from 'ngx-markdown';
 import { IntrinsicsComponent } from './intrinsics/intrinsics.component';
 import { WavComponent } from './wav/wav.component';
 import { FormsModule } from '@angular/forms';
+import { LoweringComponent } from './lowering/lowering.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InstructionsComponent,
     IntrinsicsComponent,
-    WavComponent
+    WavComponent,
+    LoweringComponent
   ],
   imports: [
     BrowserModule,
