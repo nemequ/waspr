@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Instruction } from '../instruction';
 import { InstructionDb } from '../instruction-db';
 import { InstructionService } from '../instruction.service';
-import { LoweringImplementation } from '../lowering-implementation';
-
 
 @Component({
   selector: 'app-instructions',
@@ -11,8 +8,11 @@ import { LoweringImplementation } from '../lowering-implementation';
   styleUrls: ['./instructions.component.css']
 })
 export class InstructionsComponent implements OnInit {
+  private allInstructionList: string[] = [];
+
   instructionList: string[] = [];
   instructionDetailsVisible: Map<string, boolean> = new Map();
+  filter: string = "";
 
   instructions: InstructionDb = new InstructionDb([]);
 
@@ -24,11 +24,20 @@ export class InstructionsComponent implements OnInit {
     this.instructionService.getInstructions()
       .then((instrs) => {
         this.instructions = instrs;
-        this.instructionList = this.instructions.getInstructionList();
-        this.instructionList.forEach((name) => {
+        this.allInstructionList = this.instructions.getInstructionList();
+        this.allInstructionList.forEach((name) => {
           this.instructionDetailsVisible.set(name, false);
         });
+        this.instructionList = this.allInstructionList;
       });
+  }
+
+  filterChanged(value: string): void {
+    let input = (value.startsWith(this.filter)) ? this.instructionList : this.allInstructionList;
+    this.instructionList = input.filter((haystack) => {
+      return haystack.indexOf(value) != -1;
+    });
+    this.filter = value;
   }
 
   constructor(private instructionService : InstructionService) { }

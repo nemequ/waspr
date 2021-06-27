@@ -7,6 +7,7 @@ import { InstructionsComponent } from './instructions/instructions.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { IntrinsicsComponent } from './intrinsics/intrinsics.component';
 import { WavComponent } from './wav/wav.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { WavComponent } from './wav/wav.component';
     HttpClientModule,
     AppRoutingModule,
     MarkdownModule.forRoot(),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

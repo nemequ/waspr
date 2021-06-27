@@ -8,8 +8,11 @@ import { InstructionService } from '../instruction.service';
   styleUrls: ['./wav.component.css']
 })
 export class WavComponent implements OnInit {
+  private allWavList: string[] = [];
+
   wavList: string[] = [];
   wavDetailsVisible: Map<string, boolean> = new Map();
+  filter: string = "";
 
   instructions: InstructionDb = new InstructionDb([]);
 
@@ -21,11 +24,20 @@ export class WavComponent implements OnInit {
     this.instructionService.getInstructions()
       .then((instrs) => {
         this.instructions = instrs;
-        this.wavList = this.instructions.getWavList();
-        this.wavList.forEach((name) => {
+        this.allWavList = this.instructions.getWavList();
+        this.allWavList.forEach((name) => {
           this.wavDetailsVisible.set(name, false);
         });
+        this.wavList = this.allWavList;
       });
+  }
+
+  filterChanged(value: string): void {
+    let input = (value.startsWith(this.filter)) ? this.wavList : this.allWavList;
+    this.wavList = input.filter((haystack) => {
+      return haystack.indexOf(value) != -1;
+    });
+    this.filter = value;
   }
 
   constructor(private instructionService : InstructionService) { }

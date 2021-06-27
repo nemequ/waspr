@@ -1,3 +1,11 @@
+<nav class="navbar navbar-light bg-primary sticky-top">
+  <div class="container-fluid">
+    <form class="d-flex input-group">
+      <input [ngModel]="filter" [ngModelOptions]="{standalone: true}" (ngModelChange)="filterChanged($event)" type="text" placeholder="Search…" class="form-control" aria-label="Search">
+    </form>
+  </div>
+</nav>
+
 <div class="container">
   <h2>WAV Functions</h2>
 
