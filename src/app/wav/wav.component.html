@@ -69,6 +69,26 @@
                 corresponding intrinsic in SIMDe.
               </p>
 
+              <section *ngIf="wav.alias">
+                <h4>Aliases</h4>
+
+                <ul>
+                  <li *ngFor="let alias of wav.alias">
+                    <code>
+                      <em class="item-name fw-bold">
+                        {{ wav.return }}
+                        {{ alias }}
+                        (<ol class="function-parameters comma-separated">
+                          <li *ngFor="let param of wav.params">
+                            {{ param.type }} {{ param.name }}
+                          </li>
+                        </ol>);
+                      </em>
+                    </code>
+                  </li>
+                </ul>
+              </section>
+
               <section>
                 <h4>Instruction</h4>
 

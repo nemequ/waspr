@@ -72,7 +72,7 @@ export class InstructionDb {
   }
 
   wavId(func: Function): string {
-    return 'func-' + func.name.replace('.', '_');
+    return 'wav-' + func.name.replace('.', '_');
   }
 
   sumLatency(impl: LoweringImplementation): number {
