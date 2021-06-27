@@ -87,6 +87,12 @@ export class InstructionDb {
     return total;
   }
 
+  sumThroughput(impl: LoweringImplementation): number {
+    var total: number = 0;
+    impl.instructions.forEach((inst) => total += inst.throughput)
+    return total;
+  }
+
   constructor(
     private instructions: Instruction[]
   ) {
