@@ -42,71 +42,7 @@
         </h2>
 
         <div class="accordion-collapse" *ngIf="instructionDetailsVisible.get(instruction_name)" [attr.aria-labelledby]="instructions.instructionId(instruction)">
-          <div class="accordion-body">
-            <h3>Description</h3>
-
-            <markdown [data]="instruction.description"></markdown>
-
-            <p *ngIf="instruction.simde">
-              View <a [href]="instruction.simde">implementation
-              <i class="fas fa-external-link-alt"></i></a> of
-              corresponding intrinsic in SIMDe.
-            </p>
-
-            <h3>APIs</h3>
-
-            <section>
-              <h4>WAV Functions</h4>
-
-              <ul>
-                <ng-container *ngFor="let fn of instruction.wav">
-                  <li *ngFor="let alias of fn.alias">
-                    <code class="function-prototype">
-                      <span class="function-return-type">{{ fn.return }}</span>&nbsp;
-                      <em class="function-name fw-bold">{{ alias }}</em>
-                      (<ol class="function-parameters comma-separated">
-                        <li *ngFor="let param of fn.params" class="function-parameter">
-                          <span class="function-parameter-type">{{ param.type }}</span>&nbsp;<span class="function-parameter-name">{{ param.name }}</span>
-                        </li>
-                      </ol>);
-                    </code>
-                  </li>
-
-                  <li>
-                    <code class="function-prototype">
-                      <span class="function-return-type">{{ fn.return }}</span>&nbsp;
-                      <em class="function-name fw-bold">{{ fn.name }}</em>
-                      (<ol class="function-parameters comma-separated">
-                        <li *ngFor="let param of fn.params" class="function-parameter">
-                          <span class="function-parameter-type">{{ param.type }}</span>&nbsp;<span class="function-parameter-name">{{ param.name }}</span>
-                        </li>
-                      </ol>);
-                    </code>
-                  </li>
-                </ng-container>
-              </ul>
-            </section>
-
-            <section>
-              <h4>Intrinsics</h4>
-
-              <ul>
-                <li *ngFor="let fn of instruction.intrin">
-                  <code class="function-prototype">
-                    <span class="function-return-type">{{ fn.return }}</span>&nbsp;
-                    <em class="function-name fw-bold">{{ fn.name }}</em>
-                    (<ol class="function-parameters comma-separated">
-                      <li *ngFor="let param of fn.params" class="function-parameter">
-                        <span class="function-parameter-type">{{ param.type }}</span>&nbsp;<span class="function-parameter-name">{{ param.name }}</span>
-                      </li>
-                    </ol>);
-                  </code>
-                </li>
-              </ul>
-            </section>
-
-            <lowering [instruction]="instruction"></lowering>
-          </div>
+          <instruction class="accordion-body" [instruction]="instruction"></instruction>
         </div>
       </div>
     </div>

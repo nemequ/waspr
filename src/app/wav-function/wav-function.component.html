@@ -1,0 +1,123 @@
+<ng-container *ngIf="wav">
+  <ng-container *ngFor="let instruction of [instructions.getInstructionForWav(wav.name)]">
+    <section *ngIf="instruction" class="container">&nbsp;
+      <h3>{{ wav.name }}</h3>
+
+      <markdown [data]="instruction.description"></markdown>
+
+      <p *ngIf="instruction.simde">
+        View <a [href]="instruction.simde">implementation
+        <i class="fas fa-external-link-alt"></i></a> of
+        corresponding intrinsic in SIMDe.
+      </p>
+
+      <section>
+        <h4>Prototype</h4>
+
+        <p>
+          <code>
+            <em class="item-name fw-bold">
+              {{ wav.return }}
+              {{ wav.name }}
+              (<ol class="function-parameters comma-separated">
+                <li *ngFor="let param of wav.params">
+                  {{ param.type }} {{ param.name }}
+                </li>
+              </ol>);
+            </em>
+          </code>
+        </p>
+      </section>
+
+      <section *ngIf="wav.alias">
+        <h4>Aliases</h4>
+
+        <ul>
+          <li *ngFor="let alias of wav.alias">
+            <code>
+              <em class="item-name fw-bold">
+                {{ wav.return }}
+                {{ alias }}
+                (<ol class="function-parameters comma-separated">
+                  <li *ngFor="let param of wav.params">
+                    {{ param.type }} {{ param.name }}
+                  </li>
+                </ol>);
+              </em>
+            </code>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h4>Instruction</h4>
+
+        <p>
+          <code>
+            <em class="item-name fw-bold">
+              {{ instruction.name }}
+              (<ol class="function-parameters comma-separated">
+                <li *ngFor="let param of instruction.params">
+                  {{ param.name }}: {{ param.type }}
+                </li>
+              </ol>)
+              ->
+              {{ instruction.return }}
+            </em>
+          </code>
+        </p>
+      </section>
+
+      <section>
+        <h4>Intrinsics</h4>
+
+        <ul>
+          <li *ngFor="let intrinsic of instruction.intrin">
+            <code>
+              <em class="item-name fw-bold">
+                {{ intrinsic.return }}
+                {{ intrinsic.name }}
+                (<ol class="function-parameters comma-separated">
+                  <li *ngFor="let param of intrinsic.params">
+                    {{ param.type }} {{ param.name }}
+                  </li>
+                </ol>);
+              </em>
+            </code>
+          </li>
+        </ul>
+      </section>
+
+      <section *ngIf="instruction.wav!.length > 1">
+        <h4>See Also</h4>
+
+        <p *ngIf="instruction.wav!.length > 1">
+          These functions implement the same instruction.
+        </p>
+
+        <p>
+          This doesn't include the overloaded aliases yet (probably
+          <code>wav_{{ instruction.family_name }}()</code>).
+        </p>
+
+        <ul>
+          <ng-container *ngFor="let fn of instruction.wav">
+            <li *ngIf="fn.name != wav.name">
+              <code class="function-prototype">
+                <span class="function-return-type">{{ fn.return }}</span>&nbsp;
+                <em class="function-name fw-bold">{{ fn.name }}</em>
+                (<ol class="function-parameters comma-separated">
+                  <li *ngFor="let param of fn.params" class="function-parameter">
+                    <span class="function-parameter-type">{{ param.type }}</span>&nbsp;<span class="function-parameter-name">{{ param.name }}</span>
+                  </li>
+                </ol>);
+              </code>
+            </li>
+          </ng-container>
+        </ul>
+      </section>
+
+      <lowering [instruction]="instruction"></lowering>
+    </section>
+  </ng-container>
+</ng-container>

@@ -9,6 +9,9 @@ import { IntrinsicsComponent } from './intrinsics/intrinsics.component';
 import { WavComponent } from './wav/wav.component';
 import { FormsModule } from '@angular/forms';
 import { LoweringComponent } from './lowering/lowering.component';
+import { InstructionComponent } from './instruction/instruction.component';
+import { IntrinsicComponent } from './intrinsic/intrinsic.component';
+import { WavFunctionComponent } from './wav-function/wav-function.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { LoweringComponent } from './lowering/lowering.component';
     InstructionsComponent,
     IntrinsicsComponent,
     WavComponent,
-    LoweringComponent
+    LoweringComponent,
+    InstructionComponent,
+    IntrinsicComponent,
+    WavFunctionComponent
   ],
   imports: [
     BrowserModule,
