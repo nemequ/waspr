@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'wav', component: WavComponent },
   { path: 'wav/:wav', component: WavDetailComponent },
   { path: 'families', component: FamiliesComponent },
-  { path: '', redirectTo: '/families', pathMatch: 'full' },
+  { path: '', redirectTo: '/instructions', pathMatch: 'full' },
 ];
 
 @NgModule({
