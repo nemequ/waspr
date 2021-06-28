@@ -1,0 +1,11 @@
+<div class="container">
+  &nbsp;
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" aria-current="page"><a routerLink="intrinsics">Intrinsics</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ intrinsic?.name }}</li>
+    </ol>
+  </nav>
+
+  <intrinsic [intrinsic]="intrinsic"></intrinsic>
+</div>

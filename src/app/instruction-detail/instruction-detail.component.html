@@ -1,0 +1,11 @@
+<div class="container">
+  &nbsp;
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" aria-current="page"><a routerLink="instructions">Instructions</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ instruction?.name }}</li>
+    </ol>
+  </nav>
+
+  <instruction [instruction]="instruction"></instruction>
+</div>

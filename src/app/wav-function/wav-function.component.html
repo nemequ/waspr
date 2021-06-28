@@ -1,7 +1,10 @@
 <ng-container *ngIf="wav">
   <ng-container *ngFor="let instruction of [instructions.getInstructionForWav(wav.name)]">
     <section *ngIf="instruction" class="container">&nbsp;
-      <h3>{{ wav.name }}</h3>
+      <h3>
+        <a routerLink="/wav/{{ wav.name }}"><i class="fas fa-link"></i></a>
+        {{ wav.name }}
+      </h3>
 
       <markdown [data]="instruction.description"></markdown>
 

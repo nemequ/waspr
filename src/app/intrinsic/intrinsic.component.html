@@ -1,7 +1,10 @@
 <ng-container *ngIf="intrinsic">
   <ng-container *ngFor="let instruction of [instructions.getInstructionForIntrinsic(intrinsic.name)]">
     <section *ngIf="instruction" class="container">
-      <h3>{{ intrinsic.name }}</h3>
+      <h3>
+        <a routerLink="/intrinsics/{{ intrinsic.name }}"><i class="fas fa-link"></i></a>
+        {{ intrinsic.name }}
+      </h3>
 
       <markdown [data]="instruction.description"></markdown>
 

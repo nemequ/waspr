@@ -1,5 +1,8 @@
 <section *ngIf="instruction" class="container">
-  <h3>{{ instruction.name }}</h3>
+  <h3>
+    <a routerLink="/instructions/{{ instruction.name }}"><i class="fas fa-link"></i></a>
+    {{ instruction.name }}
+  </h3>
 
   <markdown [data]="instruction.description"></markdown>
 

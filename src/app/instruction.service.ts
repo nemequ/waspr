@@ -3,6 +3,7 @@ import { Instruction } from './instruction';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { InstructionDb } from './instruction-db';
+import { Family } from './family';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,14 @@ export class InstructionService {
     }
 
     return this.http.get(this.dataUri).toPromise().then((data) => {
+      var families: Family[] = [];
       var instructions: Instruction[] = [];
 
       for (const [family_name, family] of Object.entries(data)) {
+        var fam: Family = <Family>family;
+        fam.name = family_name;
+        families.push(fam);
+
         family['instructions'].forEach((instruction: Instruction) => {
           instruction.description = family["description"];
           instruction.title = family["title"];
@@ -28,7 +34,7 @@ export class InstructionService {
         });
       }
 
-      this.instdb = new InstructionDb(instructions);
+      this.instdb = new InstructionDb(families);
 
       return this.instdb;
     });

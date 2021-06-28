@@ -12,6 +12,10 @@ import { LoweringComponent } from './lowering/lowering.component';
 import { InstructionComponent } from './instruction/instruction.component';
 import { IntrinsicComponent } from './intrinsic/intrinsic.component';
 import { WavFunctionComponent } from './wav-function/wav-function.component';
+import { FamiliesComponent } from './families/families.component';
+import { InstructionDetailComponent } from './instruction-detail/instruction-detail.component';
+import { IntrinsicDetailComponent } from './intrinsic-detail/intrinsic-detail.component';
+import { WavDetailComponent } from './wav-detail/wav-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { WavFunctionComponent } from './wav-function/wav-function.component';
     LoweringComponent,
     InstructionComponent,
     IntrinsicComponent,
-    WavFunctionComponent
+    WavFunctionComponent,
+    FamiliesComponent,
+    InstructionDetailComponent,
+    IntrinsicDetailComponent,
+    WavDetailComponent
   ],
   imports: [
     BrowserModule,

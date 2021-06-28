@@ -1,0 +1,28 @@
+<section class="container">
+  &nbsp;
+  <h3>WebAssembly SIMD Families</h3>
+
+  <section *ngFor="let family of instructions.getFamilies()">
+    <h4>{{ family.title }}</h4>
+
+    <markdown [data]="family.description"></markdown>
+
+    <h5>Instructions</h5>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Instruction</th>
+          <th>Opcode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let instruction of family.instructions">
+          <td><a routerLink="/instructions/{{ instruction.name }}">{{ instruction.name }}</a></td>
+          <td>{{ instruction.opcode }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+

@@ -1,11 +1,15 @@
 import { Instruction } from "./instruction";
 import { Function } from "./function";
 import { LoweringImplementation } from "./lowering-implementation";
+import { Family } from "./family";
 
 export class InstructionDb {
   private instructionNameMap: Map<string, Instruction> = new Map<string, Instruction>();
   private intrinsicNameMap: Map<string, Instruction> = new Map<string, Instruction>();
   private wavNameMap: Map<string, Instruction> = new Map<string, Instruction>();
+  private instructionFamilyMap: Map<string, Instruction[]> = new Map<string, Instruction[]>();
+  private instructions: Instruction[] = [];
+  private families: Map<string, Family> = new Map<string, Family>();
 
   getInstruction(instruction: string): Instruction | undefined {
     return this.instructionNameMap?.get(instruction);
@@ -17,6 +21,14 @@ export class InstructionDb {
     } else {
       return [];
     }
+  }
+
+  getFamilyList(): string[] {
+    return Array.from(this.instructionFamilyMap.keys());
+  }
+
+  getFamilies(): Family[] {
+    return Array.from(this.families.values());
   }
 
   instructionId(inst: Instruction): string {
@@ -94,16 +106,33 @@ export class InstructionDb {
   }
 
   constructor(
-    private instructions: Instruction[]
+    families: Family[]
   ) {
-    this.instructions.forEach((instr) => {
-      this.instructionNameMap.set(instr.name, instr);
+    families.forEach((family) => {
+      this.families.set(family.name, family);
+
+      family.instructions?.forEach((instr) => {
+        instr.description = family.description;
+        instr.title = family.title;
+        instr.family_name = family.name;
+        this.instructions.push(instr);
+
+        this.instructionNameMap.set(instr.name, instr);
         instr.intrin?.forEach((func) => {
           this.intrinsicNameMap.set(func.name, instr);
         });
         instr.wav?.forEach((func) => {
           this.wavNameMap.set(func.name, instr);
         });
+        if (instr.family_name) {
+          let fam = this.instructionFamilyMap.get(instr.family_name);
+          if (!fam) {
+            fam = [];
+            this.instructionFamilyMap.set(instr.family_name, fam);
+          }
+          fam.push(instr);
+        }
+      });
     });
   }
 }
