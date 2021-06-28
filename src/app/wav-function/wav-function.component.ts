@@ -9,7 +9,8 @@ import { Function } from '../function';
   templateUrl: './wav-function.component.html',
   styleUrls: ['./wav-function.component.css']
 })
-export class WavFunctionComponent implements OnInit {  @Input()
+export class WavFunctionComponent implements OnInit {
+  @Input()
   instruction?: Instruction;
   @Input()
   wav?: Function;
