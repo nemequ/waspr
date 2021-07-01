@@ -43,8 +43,8 @@
               <tr>
                 <th>Instruction</th>
                 <th>Parameters</th>
-                <th>uOps</th>
                 <th>RThroughput</th>
+                <th>uOps</th>
                 <th>Latency</th>
               </tr>
             </thead>
@@ -57,8 +57,8 @@
                     <li class="d-inline" *ngFor="let arg of inst.arguments">{{ arg }}</li>
                   </ol>
                 </td>
-                <td>{{ inst.uops | number }}</td>
                 <td>{{ inst.throughput | number }}</td>
+                <td>{{ inst.uops | number }}</td>
                 <td>{{ inst.latency | number }}</td>
               </tr>
             </tbody>
@@ -66,8 +66,8 @@
             <tfoot>
               <tr>
                 <th colspan="2">Total</th>
+                <td></td>
                 <td>{{ instructions.sumOps(impl) | number }}</td>
-                <td>{{ instructions.sumThroughput(impl) | number }}</td>
                 <td>{{ instructions.sumLatency(impl) | number }}</td>
               </tr>
             </tfoot>
