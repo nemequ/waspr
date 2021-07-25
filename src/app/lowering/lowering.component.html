@@ -50,7 +50,7 @@
             </thead>
 
             <tbody>
-              <tr *ngFor="let inst of impl.instructions">
+              <tr *ngFor="let inst of impl.instructions.sequence">
                 <td>{{ inst.name }}</td>
                 <td>
                   <ol class="comma-separated">
@@ -66,9 +66,9 @@
             <tfoot>
               <tr>
                 <th colspan="2">Total</th>
-                <td></td>
+                <td>{{ instructions.blockRThroughput(impl) | number }}</td>
                 <td>{{ instructions.sumOps(impl) | number }}</td>
-                <td>{{ instructions.sumLatency(impl) | number }}</td>
+                <td></td>
               </tr>
             </tfoot>
           </table>

@@ -89,14 +89,18 @@ export class InstructionDb {
 
   sumLatency(impl: LoweringImplementation): number {
     var total: number = 0;
-    impl.instructions.forEach((inst) => total += inst.latency)
+    impl.instructions.sequence.forEach((inst) => total += inst.latency)
     return total;
   }
 
   sumOps(impl: LoweringImplementation): number {
     var total: number = 0;
-    impl.instructions.forEach((inst) => total += inst.uops)
+    impl.instructions.sequence.forEach((inst) => total += inst.uops)
     return total;
+  }
+
+  blockRThroughput(impl: LoweringImplementation): number {
+    return impl.instructions.throughput;
   }
 
   constructor(
